@@ -1,7 +1,11 @@
 <template>
-  <div class="main">
-    <Nuxt />
-  </div>
+  <v-app>
+    <v-main class="main">
+      <v-container>
+        <Nuxt />
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
 <script>

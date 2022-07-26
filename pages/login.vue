@@ -48,24 +48,25 @@
 </template>
 
 <script>
-import { validationMixin } from 'vuelidate'
-import { required, maxLength, email } from 'vuelidate/lib/validators'
+  import { validationMixin } from 'vuelidate'
+  import { required, maxLength, email } from 'vuelidate/lib/validators'
 
-export default {
-  name: 'LoginPage',
-  mixins: [validationMixin],
-  layout: 'forLogin',
-  validations: {
-    name: { required, maxLength: maxLength(10) },
-    email: { required, email },
-    select: { required },
-    checkbox: {
-      checked (val) {
-        return val
+  export default {
+    name: 'LoginPage',
+    mixins: [validationMixin],
+    layout: 'forLogin',
+    validations: {
+      name: { required, maxLength: maxLength(10) },
+      email: { required, email },
+      select: { required },
+      checkbox: {
+        checked (val) {
+          return val
+        },
       },
     },
-  },
-  data: () => ({
+
+    data: () => ({
       name: '',
       email: '',
       select: null,
@@ -119,6 +120,5 @@ export default {
         this.checkbox = false
       },
     },
-
-}
+  }
 </script>

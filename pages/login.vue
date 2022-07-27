@@ -1,50 +1,43 @@
 <template>
-  <form>
-    <v-text-field
-      v-model="name"
-      :error-messages="nameErrors"
-      :counter="10"
-      label="Name"
-      required
-      @input="$v.name.$touch()"
-      @blur="$v.name.$touch()"
-    ></v-text-field>
-    <v-text-field
-      v-model="email"
-      :error-messages="emailErrors"
-      label="E-mail"
-      required
-      @input="$v.email.$touch()"
-      @blur="$v.email.$touch()"
-    ></v-text-field>
-    <v-select
-      v-model="select"
-      :items="items"
-      :error-messages="selectErrors"
-      label="Item"
-      required
-      @change="$v.select.$touch()"
-      @blur="$v.select.$touch()"
-    ></v-select>
-    <v-checkbox
-      v-model="checkbox"
-      :error-messages="checkboxErrors"
-      label="Do you agree?"
-      required
-      @change="$v.checkbox.$touch()"
-      @blur="$v.checkbox.$touch()"
-    ></v-checkbox>
-
-    <v-btn
-      class="mr-4"
-      @click="submit"
-    >
-      submit
-    </v-btn>
-    <v-btn @click="clear">
-      clear
-    </v-btn>
-  </form>
+  <main class="main">
+    <div class="picturebox">
+      <img src="~/static/images/logo.png" class="picture" alt="">
+    </div>
+    <h1>後台系統登入</h1>
+    <form class="container">
+      <v-text-field
+        v-model="email"
+        :error-messages="emailErrors"
+        label="信箱"
+        required
+        @input="$v.email.$touch()"
+        @blur="$v.email.$touch()"
+      ></v-text-field>
+      <v-text-field
+        v-model="password"
+        type="password"
+        :error-messages="passwordErrors"
+        label="密碼"
+        required
+        @input="$v.password.$touch()"
+        @blur="$v.password.$touch()"
+      ></v-text-field>
+      <v-checkbox
+        v-model="checkbox"
+        :error-messages="checkboxErrors"
+        label="不是機器人?"
+        required
+        @change="$v.checkbox.$touch()"
+        @blur="$v.checkbox.$touch()"
+      ></v-checkbox>
+      <v-btn
+        class="mr-4"
+        @click="submit"
+      >
+        登入
+      </v-btn>
+    </form>
+  </main>
 </template>
 
 <script>
@@ -58,7 +51,7 @@
     validations: {
       name: { required, maxLength: maxLength(10) },
       email: { required, email },
-      select: { required },
+      password: { required },
       checkbox: {
         checked (val) {
           return val
@@ -67,15 +60,8 @@
     },
 
     data: () => ({
-      name: '',
+      password: '',
       email: '',
-      select: null,
-      items: [
-        'Item 1',
-        'Item 2',
-        'Item 3',
-        'Item 4',
-      ],
       checkbox: false,
     }),
 
@@ -86,17 +72,10 @@
         !this.$v.checkbox.checked && errors.push('You must agree to continue!')
         return errors
       },
-      selectErrors () {
+      passwordErrors () {
         const errors = []
-        if (!this.$v.select.$dirty) return errors
-        !this.$v.select.required && errors.push('Item is required')
-        return errors
-      },
-      nameErrors () {
-        const errors = []
-        if (!this.$v.name.$dirty) return errors
-        !this.$v.name.maxLength && errors.push('Name must be at most 10 characters long')
-        !this.$v.name.required && errors.push('Name is required.')
+        if (!this.$v.password.$dirty) return errors
+        !this.$v.password.required && errors.push('Password is required.')
         return errors
       },
       emailErrors () {
@@ -111,14 +90,28 @@
     methods: {
       submit () {
         this.$v.$touch()
-      },
-      clear () {
-        this.$v.$reset()
-        this.name = ''
-        this.email = ''
-        this.select = null
-        this.checkbox = false
-      },
+      }
     },
   }
 </script>
+
+<style scoped>
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.container {
+  width: 50%;
+}
+
+.picturebox {
+  width: 13rem;
+}
+
+.picture {
+  width: 100%
+}
+</style>

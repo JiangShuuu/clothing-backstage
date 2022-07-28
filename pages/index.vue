@@ -73,6 +73,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
+          <Nuxt-link to="/login"> Login </Nuxt-link>
           <v-btn color="primary" nuxt to="/inspire"> Continue </v-btn>
         </v-card-actions>
       </v-card>

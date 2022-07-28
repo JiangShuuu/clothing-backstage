@@ -54,8 +54,8 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    proxy: true,
-    baseURL: 'https://localhost:3000'
+    // proxy: true,
+    baseURL: 'https://marvelous-olympic-18045.herokuapp.com'
   },
 
   // proxy: {
@@ -74,7 +74,7 @@ export default {
           // autoFetch: true
         },
         endpoints: {
-          login: { url: '/sigin', method: 'post' },
+          login: { url: '/signin', method: 'post' },
         }
       }
     },

@@ -6,7 +6,7 @@
     <h1>後台系統登入</h1>
     <form class="container">
       <v-text-field
-        v-model="email"
+        v-model="login.email"
         :error-messages="emailErrors"
         label="信箱"
         required
@@ -14,7 +14,7 @@
         @blur="$v.email.$touch()"
       ></v-text-field>
       <v-text-field
-        v-model="password"
+        v-model="login.password"
         type="password"
         :error-messages="passwordErrors"
         label="密碼"
@@ -60,8 +60,10 @@
     },
 
     data: () => ({
-      password: '',
-      email: '',
+      login: {
+        email: 'user2@example.com',
+        password: '12345678',
+      },
       checkbox: false,
     }),
 
@@ -88,9 +90,20 @@
     },
 
     methods: {
-      submit () {
+      async submit () {
         this.$v.$touch()
+        const response = await this.$auth.loginWith('local', { data: this.login })
+        console.log(response)
       }
+      // async submit () {
+      //   try {
+      //     const response = await this.$auth.loginWith('local', { data: this.login })
+      //     console.log(response)
+      //     this.$router.push('/admin')
+      //   } catch (err) {
+      //     console.log(err)
+      //   }
+      // }
     },
   }
 </script>

@@ -94,7 +94,10 @@
             email: this.email,
             password: this.password
           }})
-          console.log(response)
+          this.$auth.setUser(response.data.data.user)
+          // this.$auth.setUserToken(response.data.data.token)
+          // console.log(response.data.data.token)
+          this.$router.push('/')
         }
       }
       // async submit () {

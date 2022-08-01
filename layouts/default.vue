@@ -37,6 +37,9 @@
       </v-btn>
       <v-toolbar-title v-text="title" />
       <v-spacer />
+      <button @click="$auth.logout()">
+        LogOut
+      </button>
     </v-app-bar>
     <v-main>
       <v-container>

@@ -66,7 +66,7 @@ export default {
     strategies: {
       local: {
         token: {
-          property: 'token',
+          property: '__token..',
           global: true,
         },
         user: {
@@ -75,15 +75,19 @@ export default {
         },
         endpoints: {
           login: { url: '/signin', method: 'post' },
+          logout: { url: '/logout', method: 'post' }
         }
       }
     },
     redirect: {
-      login: '/',
+      login: '/login',
       logout: '/',
       callback: '/login',
       home: '/'
     }
+  },
+  router: {
+    middleware: ['auth']
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify

@@ -3,113 +3,58 @@
     <div class="picturebox">
       <img src="~/static/images/logo.png" class="picture" alt="">
     </div>
-    <h1>後台系統登入</h1>
-    <form class="container">
-      <v-text-field
-        v-model="email"
-        :error-messages="emailErrors"
-        label="信箱"
-        required
-        @input="$v.email.$touch()"
-        @blur="$v.email.$touch()"
-      ></v-text-field>
-      <v-text-field
-        v-model="password"
-        type="password"
-        :error-messages="passwordErrors"
-        label="密碼"
-        required
-        @input="$v.password.$touch()"
-        @blur="$v.password.$touch()"
-      ></v-text-field>
+    <h1>後台系統登入{{$auth.user}}</h1>
+    <v-form ref="form" v-model="valid" lazy-validation>
+
+      <v-text-field v-model="email" :rules="emailRules" label="信箱" required></v-text-field>
+      <v-text-field v-model="password" type="password" :rules="passwordRules" label="密碼" required></v-text-field>
+
       <v-checkbox
-        v-model="checkbox"
-        :error-messages="checkboxErrors"
-        label="不是機器人?"
-        required
-        @change="$v.checkbox.$touch()"
-        @blur="$v.checkbox.$touch()"
-      ></v-checkbox>
-      <v-btn
-        class="mr-4"
-        @click="submit"
-      >
-        登入
+        v-model="checkbox" :rules="[v => !!v || 'You must agree to continue!']" label="Do you agree?"
+        required>
+      </v-checkbox>
+
+      <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">
+        Validate
       </v-btn>
-    </form>
+    </v-form>
   </main>
 </template>
 
 <script>
-  import { validationMixin } from 'vuelidate'
-  import { required, maxLength, email } from 'vuelidate/lib/validators'
+  // import { validationMixin } from 'vuelidate'
 
   export default {
     name: 'LoginPage',
-    mixins: [validationMixin],
     layout: 'forLogin',
-    validations: {
-      name: { required, maxLength: maxLength(10) },
-      email: { required, email },
-      password: { required },
-      checkbox: {
-        checked (val) {
-          return val
-        },
-      },
-    },
 
     data: () => ({
       email: 'user2@example.com',
       password: '12345678',
       checkbox: false,
+      valid: true,
+      passwordRules: [
+        v => !!v || 'Password is required'
+      ],
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+      ]
     }),
 
-    computed: {
-      checkboxErrors () {
-        const errors = []
-        if (!this.$v.checkbox.$dirty) return errors
-        !this.$v.checkbox.checked && errors.push('You must agree to continue!')
-        return errors
-      },
-      passwordErrors () {
-        const errors = []
-        if (!this.$v.password.$dirty) return errors
-        !this.$v.password.required && errors.push('Password is required.')
-        return errors
-      },
-      emailErrors () {
-        const errors = []
-        if (!this.$v.email.$dirty) return errors
-        !this.$v.email.email && errors.push('Must be valid e-mail')
-        !this.$v.email.required && errors.push('E-mail is required')
-        return errors
-      },
-    },
-
     methods: {
-      async submit () {
-        if (!this.$v.$touch()) {
+      async validate() {
+        if (this.$refs.form.validate()) {
           const response = await this.$auth.loginWith('local', { data: {
             email: this.email,
             password: this.password
           }})
+          this.$auth.strategy.token.set(response.data.data.token)
           this.$auth.setUser(response.data.data.user)
-          // this.$auth.setUserToken(response.data.data.token)
-          // console.log(response.data.data.token)
           this.$router.push('/')
         }
-      }
-      // async submit () {
-      //   try {
-      //     const response = await this.$auth.loginWith('local', { data: this.login })
-      //     console.log(response)
-      //     this.$router.push('/admin')
-      //   } catch (err) {
-      //     console.log(err)
-      //   }
-      // }
-    },
+      },
+    }
   }
 </script>
 

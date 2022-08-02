@@ -66,13 +66,13 @@ export default {
     strategies: {
       local: {
         token: {
-          property: '__token..',
+          property: 'token',
           global: true,
         },
-        user: {
-          property: 'user',
-          // autoFetch: true
-        },
+        // user: {
+        //   property: 'user',
+        //   // autoFetch: true
+        // },
         endpoints: {
           login: { url: '/signin', method: 'post' },
           logout: { url: '/logout', method: 'post' }

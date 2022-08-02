@@ -66,17 +66,17 @@ export default {
     strategies: {
       local: {
         token: {
-          property: 'token',
+          prefix: '_token.',
           global: true,
         },
-        // user: {
-        //   property: 'user',
-        //   // autoFetch: true
-        // },
+        user: {
+          property: 'user',
+          // autoFetch: true
+        },
         endpoints: {
           login: { url: '/signin', method: 'post' },
-          logout: { url: '/logout', method: 'post' },
-          user: { url: '/users/24', method: 'get' }
+          logout: false,
+          user: false
         }
       }
     },

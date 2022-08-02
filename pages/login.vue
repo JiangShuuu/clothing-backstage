@@ -27,7 +27,7 @@
   export default {
     name: 'LoginPage',
     layout: 'forLogin',
-    auth: false,
+    auth: 'guest',
     data: () => ({
       email: 'user2@example.com',
       password: '12345678',
@@ -50,6 +50,7 @@
             password: this.password
           }})
           this.$auth.strategy.token.set(response.data.data.token)
+          console.log(response.data.data.user)
           this.$auth.setUser(response.data.data.user)
           this.$router.push('/')
         }

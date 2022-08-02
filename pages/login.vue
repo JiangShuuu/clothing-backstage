@@ -4,18 +4,18 @@
       <img src="~/static/images/logo.png" class="picture" alt="">
     </div>
     <h1>後台系統登入{{$auth.user}}</h1>
-    <v-form ref="form" v-model="valid" lazy-validation>
+    <v-form ref="form" v-model="valid" lazy-validation class="form">
 
       <v-text-field v-model="email" :rules="emailRules" label="信箱" required></v-text-field>
       <v-text-field v-model="password" type="password" :rules="passwordRules" label="密碼" required></v-text-field>
 
       <v-checkbox
-        v-model="checkbox" :rules="[v => !!v || 'You must agree to continue!']" label="Do you agree?"
+        v-model="checkbox" :rules="[v => !!v || 'You must agree to continue!']" label="不是機器人?"
         required>
       </v-checkbox>
 
       <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">
-        Validate
+        登入
       </v-btn>
     </v-form>
   </main>
@@ -27,7 +27,7 @@
   export default {
     name: 'LoginPage',
     layout: 'forLogin',
-
+    auth: false,
     data: () => ({
       email: 'user2@example.com',
       password: '12345678',
@@ -66,7 +66,8 @@
   margin-top: 2rem;
 }
 
-.container {
+.form {
+  margin-top: 50px;
   width: 50%;
 }
 

@@ -3,7 +3,7 @@
     :headers="headers"
     :items="desserts"
     :search="search"
-    sort-by="calories"
+    sort-by="og_price"
     class="elevation-1"
   >
     <template v-slot:top>
@@ -63,8 +63,8 @@
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedItem.calories"
-                      label="Calories"
+                      v-model="editedItem.og_price"
+                      label="og_price"
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -73,8 +73,8 @@
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedItem.fat"
-                      label="Fat (g)"
+                      v-model="editedItem.price"
+                      label="price (g)"
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -83,8 +83,8 @@
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedItem.carbs"
-                      label="Carbs (g)"
+                      v-model="editedItem.short_intro"
+                      label="short_intro (g)"
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -93,8 +93,8 @@
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedItem.protein"
-                      label="Protein (g)"
+                      v-model="editedItem.description"
+                      label="description (g)"
                     ></v-text-field>
                   </v-col>
                 </v-row>
@@ -167,33 +167,37 @@
       dialog: false,
       dialogDelete: false,
       headers: [
+        { text: 'Id', value: 'id' },
+        { text: '圖片', value: 'image' },
         {
-          text: 'Dessert (100g serving)',
+          text: '商品名稱',
           align: 'start',
           sortable: false,
           value: 'name',
         },
-        { text: 'Calories', value: 'calories' },
-        { text: 'Fat (g)', value: 'fat' },
-        { text: 'Carbs (g)', value: 'carbs' },
-        { text: 'Protein (g)', value: 'protein' },
+        { text: '原價', value: 'og_price' },
+        { text: '特價', value: 'price' },
+        { text: '簡介', value: 'short_intro' },
+        { text: '描述', value: 'description' },
         { text: 'Actions', value: 'actions', sortable: false },
       ],
       desserts: [],
       editedIndex: -1,
       editedItem: {
+        id: 0,
         name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0,
+        og_price: 0,
+        price: 0,
+        short_intro: 0,
+        description: 0,
       },
       defaultItem: {
+        id: 0,
         name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0,
+        og_price: 0,
+        price: 0,
+        short_intro: 0,
+        description: 0,
       },
     }),
 
@@ -220,74 +224,84 @@
       initialize () {
         this.desserts = [
           {
+            id: 1,
             name: 'Frozen Yogurt',
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
+            og_price: 159,
+            price: 6.0,
+            short_intro: 24,
+            description: 4.0,
           },
           {
+            id: 2,
             name: 'Ice cream sandwich',
-            calories: 237,
-            fat: 9.0,
-            carbs: 37,
-            protein: 4.3,
+            og_price: 237,
+            price: 9.0,
+            short_intro: 37,
+            description: 4.3,
           },
           {
+            id: 3,
             name: 'Eclair',
-            calories: 262,
-            fat: 16.0,
-            carbs: 23,
-            protein: 6.0,
+            og_price: 262,
+            price: 16.0,
+            short_intro: 23,
+            description: 6.0,
           },
           {
+            id: 4,
             name: 'Cupcake',
-            calories: 305,
-            fat: 3.7,
-            carbs: 67,
-            protein: 4.3,
+            og_price: 305,
+            price: 3.7,
+            short_intro: 67,
+            description: 4.3,
           },
           {
+            id: 5,
             name: 'Gingerbread',
-            calories: 356,
-            fat: 16.0,
-            carbs: 49,
-            protein: 3.9,
+            og_price: 356,
+            price: 16.0,
+            short_intro: 49,
+            description: 3.9,
           },
           {
+            id: 6,
             name: 'Jelly bean',
-            calories: 375,
-            fat: 0.0,
-            carbs: 94,
-            protein: 0.0,
+            og_price: 375,
+            price: 0.0,
+            short_intro: 94,
+            description: 0.0,
           },
           {
+            id: 7,
             name: 'Lollipop',
-            calories: 392,
-            fat: 0.2,
-            carbs: 98,
-            protein: 0,
+            og_price: 392,
+            price: 0.2,
+            short_intro: 98,
+            description: 0,
           },
           {
+            id: 8,
             name: 'Honeycomb',
-            calories: 408,
-            fat: 3.2,
-            carbs: 87,
-            protein: 6.5,
+            og_price: 408,
+            price: 3.2,
+            short_intro: 87,
+            description: 6.5,
           },
           {
+            id: 9,
             name: 'Donut',
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
+            og_price: 452,
+            price: 25.0,
+            short_intro: 51,
+            description: 4.9,
           },
           {
+            id: 10,
             name: 'KitKat',
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
+            og_price: 518,
+            price: 26.0,
+            short_intro: 65,
+            description: 7,
           },
         ]
       },

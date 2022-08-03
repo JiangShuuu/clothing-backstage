@@ -54,7 +54,7 @@
                   >
                     <v-text-field
                       v-model="editedItem.name"
-                      label="Dessert name"
+                      label="商品名稱"
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -64,7 +64,7 @@
                   >
                     <v-text-field
                       v-model="editedItem.og_price"
-                      label="og_price"
+                      label="原價"
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -74,7 +74,7 @@
                   >
                     <v-text-field
                       v-model="editedItem.price"
-                      label="price (g)"
+                      label="特價"
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -84,7 +84,7 @@
                   >
                     <v-text-field
                       v-model="editedItem.short_intro"
-                      label="short_intro (g)"
+                      label="簡介"
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -94,7 +94,17 @@
                   >
                     <v-text-field
                       v-model="editedItem.description"
-                      label="description (g)"
+                      label="描述"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.image"
+                      label="圖片"
                     ></v-text-field>
                   </v-col>
                 </v-row>
@@ -140,6 +150,11 @@
         max-width="60"
         :src="item.image"
       ></v-img>
+    </template>
+    <template v-slot:[`item.description`]="{ item }">
+      <div class="overflow-x-hidden" style="width: 50px">
+        {{item.description}}
+      </div>
     </template>
     <template v-slot:[`item.actions`]="{ item }">
       <v-icon

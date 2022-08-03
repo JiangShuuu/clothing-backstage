@@ -28,7 +28,6 @@
             <v-card-title>
               <span class="text-h5">{{ formTitle }}</span>
             </v-card-title>
-
             <v-card class="mx-auto my-12" max-width="374">
               <template slot="progress">
                 <v-progress-linear
@@ -61,7 +60,7 @@
                   md="6"
                 >
                   <v-text-field
-                    v-model="editedItem.og_price"
+                    v-model="editedItem.price"
                     label="特價"
                   ></v-text-field>
                 </v-col>
@@ -177,22 +176,22 @@ export default {
       name: '',
       og_price: 0,
       price: 0,
-      short_intro: 0,
-      description: 0,
+      short_intro: '',
+      description: '',
     },
     defaultItem: {
       id: 0,
       name: '',
       og_price: 0,
       price: 0,
-      short_intro: 0,
-      description: 0,
+      short_intro: '',
+      description: '',
     },
   }),
 
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+      return this.editedIndex === -1 ? '新增商品' : '修改商品'
     },
   },
 

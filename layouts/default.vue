@@ -25,6 +25,14 @@
       </v-btn> -->
       <v-toolbar-title v-text="title" />
       <v-spacer />
+      <div class="pt-6 pr-5">
+        <v-switch
+          v-model="$vuetify.theme.dark"
+          inset
+          label="切換模式"
+          persistent-hint
+        ></v-switch>
+      </div>
       <button @click="clearToken">
         LogOut
       </button>

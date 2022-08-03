@@ -12,6 +12,8 @@ module.exports = {
   plugins: [],
   // add your custom rules here
   rules: {
-    'no-console': 0
+    'no-console': 0,
+    'vue/valid-v-slot': 'off',
+    'vue/v-slot-style': 0,
   },
 }

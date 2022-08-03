@@ -37,7 +37,7 @@
         LogOut
       </button>
     </v-app-bar>
-    <v-main>
+    <v-main class="mt-6">
       <v-container>
         <Nuxt />
       </v-container>

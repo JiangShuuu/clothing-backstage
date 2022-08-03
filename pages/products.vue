@@ -133,6 +133,14 @@
         </v-dialog>
       </v-toolbar>
     </template>
+    <template v-slot:[`item.image`]="{ item }">
+      <v-img
+        :lazy-src="item.image"
+        max-height="60"
+        max-width="60"
+        :src="item.image"
+      ></v-img>
+    </template>
     <template v-slot:[`item.actions`]="{ item }">
       <v-icon
         small
@@ -230,6 +238,7 @@
             price: 6.0,
             short_intro: 24,
             description: 4.0,
+            image: 'https://picsum.photos/id/11/500/300',
           },
           {
             id: 2,
@@ -238,6 +247,7 @@
             price: 9.0,
             short_intro: 37,
             description: 4.3,
+            image: 'https://picsum.photos/id/12/500/300',
           },
           {
             id: 3,
@@ -246,6 +256,7 @@
             price: 16.0,
             short_intro: 23,
             description: 6.0,
+            image: 'https://picsum.photos/id/13/500/300',
           },
           {
             id: 4,
@@ -254,6 +265,7 @@
             price: 3.7,
             short_intro: 67,
             description: 4.3,
+            image: 'https://picsum.photos/id/14/500/300',
           },
           {
             id: 5,
@@ -262,6 +274,7 @@
             price: 16.0,
             short_intro: 49,
             description: 3.9,
+            image: 'https://picsum.photos/id/15/500/300',
           },
           {
             id: 6,
@@ -270,6 +283,7 @@
             price: 0.0,
             short_intro: 94,
             description: 0.0,
+            image: 'https://picsum.photos/id/16/500/300',
           },
           {
             id: 7,
@@ -278,6 +292,7 @@
             price: 0.2,
             short_intro: 98,
             description: 0,
+            image: 'https://picsum.photos/id/17/500/300',
           },
           {
             id: 8,
@@ -286,6 +301,7 @@
             price: 3.2,
             short_intro: 87,
             description: 6.5,
+            image: 'https://picsum.photos/id/18/500/300'
           },
           {
             id: 9,
@@ -294,6 +310,7 @@
             price: 25.0,
             short_intro: 51,
             description: 4.9,
+            image: 'https://picsum.photos/id/19/500/300'
           },
           {
             id: 10,
@@ -302,6 +319,7 @@
             price: 26.0,
             short_intro: 65,
             description: 7,
+            image: 'https://picsum.photos/id/20/500/300'
           },
         ]
       },
@@ -349,4 +367,5 @@
       },
     },
   }
+
 </script>

@@ -2,6 +2,7 @@
   <v-data-table
     :headers="headers"
     :items="desserts"
+    :search="search"
     sort-by="calories"
     class="elevation-1"
   >
@@ -9,12 +10,19 @@
       <v-toolbar
         flat
       >
-        <v-toolbar-title>My CRUD</v-toolbar-title>
+        <v-toolbar-title>商品列</v-toolbar-title>
         <v-divider
           class="mx-4"
           inset
           vertical
         ></v-divider>
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Search"
+          single-line
+          hide-details
+        ></v-text-field>
         <v-spacer></v-spacer>
         <v-dialog
           v-model="dialog"
@@ -155,6 +163,7 @@
   export default {
     name: 'ProductsPage',
     data: () => ({
+      search: '',
       dialog: false,
       dialogDelete: false,
       headers: [

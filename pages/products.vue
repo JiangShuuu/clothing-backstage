@@ -40,7 +40,11 @@
               <v-img height="200" :src="editedItem.image"></v-img>
 
               <v-card-title>
-                <v-text-field v-model="editedItem.title"></v-text-field>
+                <v-text-field v-model="editedItem.title" label="商品名稱"></v-text-field>
+              </v-card-title>
+
+              <v-card-title>
+                <v-text-field v-model="editedItem.categoryId" label="商品類別"></v-text-field>
               </v-card-title>
 
               <v-row class="px-4">
@@ -161,6 +165,7 @@ export default {
       },
       { text: '原價', value: 'og_price' },
       { text: '特價', value: 'price' },
+      { text: '類別', value: 'category' },
       { text: '簡介', value: 'short_intro' },
       { text: '描述', value: 'description' },
       { text: 'Actions', value: 'actions', sortable: false },
@@ -168,18 +173,18 @@ export default {
     products: [],
     editedIndex: -1,
     editedItem: {
-      id: 0,
       title: '',
       og_price: 0,
       price: 0,
+      categoryId: 0,
       short_intro: '',
       description: '',
     },
     defaultItem: {
-      id: 0,
       title: '',
       og_price: 0,
       price: 0,
+      categoryId: 0,
       short_intro: '',
       description: '',
     },
@@ -223,7 +228,9 @@ export default {
       this.dialogDelete = true
     },
 
-    deleteItemConfirm() {
+    async deleteItemConfirm() {
+      const data = await this.$axios.$delete(`https://marvelous-olympic-18045.herokuapp.com/admin/product/${this.editedItem.id}`)
+      console.log(data)
       this.products.splice(this.editedIndex, 1)
       this.closeDelete()
     },
@@ -244,11 +251,17 @@ export default {
       })
     },
 
-    save() {
+    async save() {
       if (this.editedIndex > -1) {
+        const data = await this.$axios.$put(`https://marvelous-olympic-18045.herokuapp.com/admin/product/${this.editedItem.id}`, this.editedItem)
+        console.log(data)
+
         Object.assign(this.products[this.editedIndex], this.editedItem)
       } else {
         this.products.push(this.editedItem)
+
+        const data = await this.$axios.$post(`https://marvelous-olympic-18045.herokuapp.com/admin/product`, this.editedItem)
+        console.log(data)
       }
       this.close()
     },

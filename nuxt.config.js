@@ -54,13 +54,13 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    // proxy: true,
-    baseURL: 'https://marvelous-olympic-18045.herokuapp.com'
+    proxy: true,
+    // baseURL: 'https://marvelous-olympic-18045.herokuapp.com'
   },
 
-  // proxy: {
-  //   '/api/': { target: 'https://vue3-course-api.hexschool.io', pathRewrite: { '^/api/': '' } }
-  // },
+  proxy: {
+    '/api/': { target: 'https://marvelous-olympic-18045.herokuapp.com', pathRewrite: { '^/api/': '' } }
+  },
 
   auth: {
     strategies: {
@@ -74,7 +74,7 @@ export default {
           // autoFetch: true
         },
         endpoints: {
-          login: { url: '/signin', method: 'post' },
+          login: { url: 'api/signin', method: 'post' },
           logout: false,
           user: false
         }

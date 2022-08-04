@@ -29,7 +29,7 @@
     layout: 'forLogin',
     auth: 'guest',
     data: () => ({
-      email: 'user2@example.com',
+      email: 'root@example.com',
       password: '12345678',
       checkbox: false,
       valid: true,

@@ -1,7 +1,7 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="desserts"
+    :items="products"
     :search="search"
     sort-by="og_price"
     class="elevation-1"
@@ -40,7 +40,7 @@
               <v-img height="200" :src="editedItem.image"></v-img>
 
               <v-card-title>
-                <v-text-field v-model="editedItem.name"></v-text-field>
+                <v-text-field v-model="editedItem.title"></v-text-field>
               </v-card-title>
 
               <v-row class="px-4">
@@ -73,10 +73,6 @@
                   v-model="editedItem.short_intro"
                   label="簡介"
                 ></v-text-field>
-                <!-- <v-text-field
-                  v-model="editedItem.description"
-                  label="描述"
-                ></v-text-field> -->
                 <v-textarea
                   v-model="editedItem.description"
                   outlined
@@ -161,7 +157,7 @@ export default {
         text: '商品名稱',
         align: 'start',
         sortable: false,
-        value: 'name',
+        value: 'title',
       },
       { text: '原價', value: 'og_price' },
       { text: '特價', value: 'price' },
@@ -169,11 +165,11 @@ export default {
       { text: '描述', value: 'description' },
       { text: 'Actions', value: 'actions', sortable: false },
     ],
-    desserts: [],
+    products: [],
     editedIndex: -1,
     editedItem: {
       id: 0,
-      name: '',
+      title: '',
       og_price: 0,
       price: 0,
       short_intro: '',
@@ -181,7 +177,7 @@ export default {
     },
     defaultItem: {
       id: 0,
-      name: '',
+      title: '',
       og_price: 0,
       price: 0,
       short_intro: '',
@@ -209,115 +205,26 @@ export default {
   },
 
   methods: {
-    initialize() {
-      this.desserts = [
-        {
-          id: 1,
-          name: 'Frozen Yogurt',
-          og_price: 159,
-          price: 6.0,
-          short_intro: 24,
-          description: 4.0,
-          image: 'https://picsum.photos/id/11/500/300',
-        },
-        {
-          id: 2,
-          name: 'Ice cream sandwich',
-          og_price: 237,
-          price: 9.0,
-          short_intro: 37,
-          description: 4.3,
-          image: 'https://picsum.photos/id/12/500/300',
-        },
-        {
-          id: 3,
-          name: 'Eclair',
-          og_price: 262,
-          price: 16.0,
-          short_intro: 23,
-          description: 6.0,
-          image: 'https://picsum.photos/id/13/500/300',
-        },
-        {
-          id: 4,
-          name: 'Cupcake',
-          og_price: 305,
-          price: 3.7,
-          short_intro: 67,
-          description: 4.3,
-          image: 'https://picsum.photos/id/14/500/300',
-        },
-        {
-          id: 5,
-          name: 'Gingerbread',
-          og_price: 356,
-          price: 16.0,
-          short_intro: 49,
-          description: 3.9,
-          image: 'https://picsum.photos/id/15/500/300',
-        },
-        {
-          id: 6,
-          name: 'Jelly bean',
-          og_price: 375,
-          price: 0.0,
-          short_intro: 94,
-          description: 0.0,
-          image: 'https://picsum.photos/id/16/500/300',
-        },
-        {
-          id: 7,
-          name: 'Lollipop',
-          og_price: 392,
-          price: 0.2,
-          short_intro: 98,
-          description: 0,
-          image: 'https://picsum.photos/id/17/500/300',
-        },
-        {
-          id: 8,
-          name: 'Honeycomb',
-          og_price: 408,
-          price: 3.2,
-          short_intro: 87,
-          description: 6.5,
-          image: 'https://picsum.photos/id/18/500/300',
-        },
-        {
-          id: 9,
-          name: 'Donut',
-          og_price: 452,
-          price: 25.0,
-          short_intro: 51,
-          description: 4.9,
-          image: 'https://picsum.photos/id/19/500/300',
-        },
-        {
-          id: 10,
-          name: 'KitKat',
-          og_price: 518,
-          price: 26.0,
-          short_intro: 65,
-          description: 7,
-          image: 'https://picsum.photos/id/20/500/300',
-        },
-      ]
+    async initialize() {
+      const { data } = await this.$axios.$get('https://marvelous-olympic-18045.herokuapp.com/admin/products')
+
+      this.products = data.data
     },
 
     editItem(item) {
-      this.editedIndex = this.desserts.indexOf(item)
+      this.editedIndex = this.products.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
 
     deleteItem(item) {
-      this.editedIndex = this.desserts.indexOf(item)
+      this.editedIndex = this.products.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialogDelete = true
     },
 
     deleteItemConfirm() {
-      this.desserts.splice(this.editedIndex, 1)
+      this.products.splice(this.editedIndex, 1)
       this.closeDelete()
     },
 
@@ -339,9 +246,9 @@ export default {
 
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem)
+        Object.assign(this.products[this.editedIndex], this.editedItem)
       } else {
-        this.desserts.push(this.editedItem)
+        this.products.push(this.editedItem)
       }
       this.close()
     },

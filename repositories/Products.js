@@ -1,4 +1,3 @@
-
 export default ($axios) => ({
   getProducts() {
     return $axios.$get(`/api/admin/products`)

@@ -9,6 +9,7 @@
     <template v-slot:top>
       <v-toolbar flat>
 
+        <!-- Nav區域 -->
         <v-toolbar-title>商品列</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-text-field
@@ -19,6 +20,8 @@
           hide-details
         ></v-text-field>
         <v-spacer></v-spacer>
+
+        <!-- 新增/修改pop -->
         <v-dialog v-model="dialog" max-width="500px">
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
@@ -112,6 +115,7 @@
           </form>
         </v-dialog>
 
+        <!-- 確認刪除pop -->
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
             <v-card-title class="text-h5"
@@ -129,6 +133,7 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
+
       </v-toolbar>
     </template>
 

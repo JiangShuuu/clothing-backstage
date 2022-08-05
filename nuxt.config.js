@@ -27,7 +27,10 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [
+    // api使用
+    { src: '~/plugins/repositories', mode: 'client' },
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -53,13 +56,11 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     proxy: true,
-    // baseURL: 'https://marvelous-olympic-18045.herokuapp.com'
   },
 
   proxy: {
-    '/api/': { target: 'https://marvelous-olympic-18045.herokuapp.com', pathRewrite: { '^/api/': '' } }
+    '/api/': { target: 'https://marvelous-olympic-18045.herokuapp.com', pathRewrite: { '^/api/': '/' } }
   },
 
   auth: {
@@ -74,7 +75,7 @@ export default {
           // autoFetch: true
         },
         endpoints: {
-          login: { url: 'api/signin', method: 'post' },
+          login: { url: '/api/signin', method: 'post' },
           logout: false,
           user: false
         }

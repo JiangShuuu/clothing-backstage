@@ -144,6 +144,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'ProductsPage',
   data: () => ({
@@ -215,8 +216,8 @@ export default {
 
   methods: {
     async initialize() {
-      const { data } = await this.$axios.$get('https://marvelous-olympic-18045.herokuapp.com/admin/products')
-
+      // const { data } = await this.$axios.$get('/api/admin/products')
+      const { data } = await this.$rpos.product.getProducts()
       this.products = data.data
     },
 

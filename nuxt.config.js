@@ -51,7 +51,6 @@ export default {
     '@nuxtjs/axios',
     // https://auth.nuxtjs.org/
     '@nuxtjs/auth-next',
-    '@nuxtjs/proxy'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

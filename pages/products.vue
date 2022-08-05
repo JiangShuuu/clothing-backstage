@@ -216,7 +216,6 @@ export default {
 
   methods: {
     async initialize() {
-      // const { data } = await this.$axios.$get('/api/admin/products')
       const { data } = await this.$rpos.product.getProducts()
       this.products = data.data
     },
@@ -226,8 +225,6 @@ export default {
       if (files.length === 0) return;
       const imageURL = window.URL.createObjectURL(files);
       this.editedItem.image = imageURL;
-      console.log('type', typeof imageURL)
-      console.log('image', this.editedItem.image)
     },
 
     editItem(item) {
@@ -243,7 +240,7 @@ export default {
     },
 
     async deleteItemConfirm() {
-      const data = await this.$axios.$delete(`https://marvelous-olympic-18045.herokuapp.com/admin/product/${this.editedItem.id}`)
+      const data = await this.$rpos.product.deleteProduct(this.editedItem .id)
       console.log(data)
       this.products.splice(this.editedIndex, 1)
       this.closeDelete()
@@ -267,7 +264,10 @@ export default {
 
     async save(e) {
       if (this.editedIndex > -1) {
-        const data = await this.$axios.$put(`https://marvelous-olympic-18045.herokuapp.com/admin/product/${this.editedItem.id}`, this.editedItem)
+        const form = e.target;
+        const formData = new FormData(form);
+
+        const data = await this.$rpos.product.putProduct(this.editedItem.id, formData)
         console.log(data)
 
         Object.assign(this.products[this.editedIndex], this.editedItem)
@@ -275,7 +275,7 @@ export default {
         const form = e.target;
         const formData = new FormData(form);
 
-        const data = await this.$axios.$post(`https://marvelous-olympic-18045.herokuapp.com/admin/product`, formData)
+        const data = await this.$rpos.product.postProduct(formData)
         console.log(data)
       }
       this.close()

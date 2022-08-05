@@ -41,34 +41,40 @@
                 <v-img height="200" :src="editedItem.image"></v-img>
                 <v-card-title>
                   <v-text-field v-model="editedItem.title" name="title" label="商品名稱"></v-text-field>
+                  <v-select
+                    v-model="editedItem.categoryId"
+                    name="categoryId"
+                    :items="categories"
+                    item-text="name"
+                    item-value="id"
+                    label="類別"
+                  ></v-select>
+                  <v-row class="px-4">
+                    <v-col
+                      cols="12"
+                      sm="6"
+                      md="6"
+                    >
+                      <v-text-field
+                        v-model="editedItem.og_price"
+                        name="og_price"
+                        label="原價"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col
+                      cols="12"
+                      sm="6"
+                      md="6"
+                    >
+                      <v-text-field
+                        v-model="editedItem.price"
+                        name="price"
+                        label="特價"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
                 </v-card-title>
-                <v-card-title>
-                  <v-text-field v-model="editedItem.categoryId" name="categoryId" label="商品類別"></v-text-field>
-                </v-card-title>
-                <v-row class="px-4">
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="6"
-                  >
-                    <v-text-field
-                      v-model="editedItem.og_price"
-                      name="og_price"
-                      label="原價"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="6"
-                  >
-                    <v-text-field
-                      v-model="editedItem.price"
-                      name="price"
-                      label="特價"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
+
                 <v-divider class="mx-4"></v-divider>
                 <v-col class="px-4">
                   <v-text-field
@@ -129,6 +135,11 @@
         :src="item.image"
       ></v-img>
     </template>
+    <template v-slot:[`item.categoryName`]="{ item }">
+      <div class="overflow-x-hidden" style="width: 50px">
+        {{ item.Category.name }}
+      </div>
+    </template>
     <template v-slot:[`item.short_intro`]="{ item }">
       <div class="overflow-x-hidden" style="width: 200px; height: 50px">
         {{ item.short_intro }}
@@ -176,27 +187,28 @@ export default {
       },
       { text: '原價', value: 'og_price' },
       { text: '特價', value: 'price' },
-      { text: '類別', value: 'category' },
+      { text: '類別', value: 'categoryName' },
       { text: '簡介', value: 'short_intro' },
       { text: '描述', value: 'description' },
       { text: 'Actions', value: 'actions', sortable: false },
     ],
     products: [],
+    categories: [],
     editedIndex: -1,
     editedItem: {
       title: '',
       og_price: 0,
       price: 0,
-      categoryId: 0,
+      categoryId: '',
       short_intro: '',
       description: '',
-      image: ''
+      image: '',
     },
     defaultItem: {
       title: '',
       og_price: 0,
       price: 0,
-      categoryId: 0,
+      categoryId: '',
       short_intro: '',
       description: '',
       image: ''
@@ -220,12 +232,19 @@ export default {
 
   created() {
     this.initialize()
+    this.getCategories()
   },
 
   methods: {
     async initialize() {
       const { data } = await this.$rpos.product.getProducts()
       this.products = data.data
+      console.log(this.products)
+    },
+
+    async getCategories() {
+      const { data } = await this.$rpos.category.getCategories()
+      this.categories = data.categories
     },
 
     changeCover(e) {
@@ -273,6 +292,7 @@ export default {
     async save(e) {
       if (this.editedIndex > -1) {
         const form = e.target;
+        console.log(form)
         const formData = new FormData(form);
 
         const data = await this.$rpos.product.putProduct(this.editedItem.id, formData)

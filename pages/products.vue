@@ -3,7 +3,7 @@
     :headers="headers"
     :items="products"
     :search="search"
-    sort-by="og_price"
+    sort-by=""
     class="elevation-1"
   >
     <template v-slot:top>

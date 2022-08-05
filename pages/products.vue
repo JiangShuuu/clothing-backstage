@@ -31,6 +31,7 @@
                 <span class="text-h5">{{ formTitle }}</span>
               </v-card-title>
               <v-card class="mx-auto my-12" max-width="374">
+
                 <template slot="progress">
                   <v-progress-linear
                     color="deep-purple"
@@ -38,7 +39,9 @@
                     indeterminate
                   ></v-progress-linear>
                 </template>
+
                 <v-img height="200" :src="editedItem.image"></v-img>
+
                 <v-card-title>
                   <v-text-field v-model="editedItem.title" name="title" label="商品名稱"></v-text-field>
                   <v-select
@@ -76,6 +79,7 @@
                 </v-card-title>
 
                 <v-divider class="mx-4"></v-divider>
+
                 <v-col class="px-4">
                   <v-text-field
                     v-model="editedItem.short_intro"
@@ -127,6 +131,8 @@
         </v-dialog>
       </v-toolbar>
     </template>
+
+    <!-- 自訂區域 -->
     <template v-slot:[`item.image`]="{ item }">
       <v-img
         :lazy-src="item.image"
@@ -135,9 +141,11 @@
         :src="item.image"
       ></v-img>
     </template>
-    <template v-slot:[`item.categoryName`]="{ item }">
-      <div class="overflow-x-hidden" style="width: 50px">
-        {{ item.Category.name }}
+    <template v-slot:[`item.categoryId`]="{ item }">
+      <div class="overflow-x-hidden" >
+        <p v-for="cate in categories" :key="cate.id">
+          <span v-if="cate.id === item.categoryId">{{cate.name}}</span>
+        </p>
       </div>
     </template>
     <template v-slot:[`item.short_intro`]="{ item }">
@@ -187,7 +195,7 @@ export default {
       },
       { text: '原價', value: 'og_price' },
       { text: '特價', value: 'price' },
-      { text: '類別', value: 'categoryName' },
+      { text: '類別', value: 'categoryId' },
       { text: '簡介', value: 'short_intro' },
       { text: '描述', value: 'description' },
       { text: 'Actions', value: 'actions', sortable: false },

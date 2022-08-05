@@ -142,10 +142,8 @@
       ></v-img>
     </template>
     <template v-slot:[`item.categoryId`]="{ item }">
-      <div class="overflow-x-hidden" >
-        <p v-for="cate in categories" :key="cate.id">
-          <span v-if="cate.id === item.categoryId">{{cate.name}}</span>
-        </p>
+      <div v-for="cate in categories" :key="cate.id">
+        <span v-if="cate.id === item.categoryId">{{cate.name}}</span>
       </div>
     </template>
     <template v-slot:[`item.short_intro`]="{ item }">
@@ -187,12 +185,7 @@ export default {
     headers: [
       { text: 'Id', value: 'id' },
       { text: '圖片', value: 'image' },
-      {
-        text: '商品名稱',
-        align: 'start',
-        sortable: false,
-        value: 'title',
-      },
+      { text: '商品名稱', value: 'title' },
       { text: '原價', value: 'og_price' },
       { text: '特價', value: 'price' },
       { text: '類別', value: 'categoryId' },

@@ -24,80 +24,82 @@
               New Item
             </v-btn>
           </template>
-          <v-card style="width: 800px">
-            <v-card-title>
-              <span class="text-h5">{{ formTitle }}</span>
-            </v-card-title>
-            <v-card class="mx-auto my-12" max-width="374">
-              <template slot="progress">
-                <v-progress-linear
-                  color="deep-purple"
-                  height="10"
-                  indeterminate
-                ></v-progress-linear>
-              </template>
-
-              <v-img height="200" :src="editedItem.image"></v-img>
-
+          <form @submit.stop.prevent="save">
+            <v-card style="width: 800px">
               <v-card-title>
-                <v-text-field v-model="editedItem.title" label="商品名稱"></v-text-field>
+                <span class="text-h5">{{ formTitle }}</span>
               </v-card-title>
-
-              <v-card-title>
-                <v-text-field v-model="editedItem.categoryId" label="商品類別"></v-text-field>
-              </v-card-title>
-
-              <v-row class="px-4">
-                <v-col
-                  cols="12"
-                  sm="6"
-                  md="6"
-                >
+              <v-card class="mx-auto my-12" max-width="374">
+                <template slot="progress">
+                  <v-progress-linear
+                    color="deep-purple"
+                    height="10"
+                    indeterminate
+                  ></v-progress-linear>
+                </template>
+                <v-img height="200" :src="editedItem.image"></v-img>
+                <v-card-title>
+                  <v-text-field v-model="editedItem.title" name="title" label="商品名稱"></v-text-field>
+                </v-card-title>
+                <v-card-title>
+                  <v-text-field v-model="editedItem.categoryId" name="categoryId" label="商品類別"></v-text-field>
+                </v-card-title>
+                <v-row class="px-4">
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="6"
+                  >
+                    <v-text-field
+                      v-model="editedItem.og_price"
+                      name="og_price"
+                      label="原價"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="6"
+                  >
+                    <v-text-field
+                      v-model="editedItem.price"
+                      name="price"
+                      label="特價"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-divider class="mx-4"></v-divider>
+                <v-col class="px-4">
                   <v-text-field
-                    v-model="editedItem.og_price"
-                    label="原價"
+                    v-model="editedItem.short_intro"
+                    name="short_intro"
+                    label="簡介"
                   ></v-text-field>
+                  <v-textarea
+                    v-model="editedItem.description"
+                    outlined
+                    name="description"
+                    label="描述"
+                  ></v-textarea>
+                  <v-file-input
+                    type="file"
+                    name="image"
+                    :rules="rules"
+                    accept="image/png, image/jpeg, image/bmp"
+                    placeholder="上傳圖片"
+                    prepend-icon="mdi-camera"
+                    label="上傳圖片"
+                    @change="changeCover"
+                  ></v-file-input>
                 </v-col>
-                <v-col
-                  cols="12"
-                  sm="6"
-                  md="6"
-                >
-                  <v-text-field
-                    v-model="editedItem.price"
-                    label="特價"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-
-              <v-divider class="mx-4"></v-divider>
-
-              <v-col class="px-4">
-                <v-text-field
-                  v-model="editedItem.short_intro"
-                  label="簡介"
-                ></v-text-field>
-                <v-textarea
-                  v-model="editedItem.description"
-                  outlined
-                  name="input-7-4"
-                  label="描述"
-                ></v-textarea>
-                <v-file-input
-                  :rules="rules"
-                  accept="image/png, image/jpeg, image/bmp"
-                  placeholder="上傳圖片"
-                  prepend-icon="mdi-camera"
-                  label="上傳圖片"
-                ></v-file-input>
-              </v-col>
+              </v-card>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="close"> Cancel </v-btn>
+                <v-btn color="blue darken-1" text type="submit" > Save </v-btn>
+              </v-card-actions>
             </v-card>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="close"> Cancel </v-btn>
-              <v-btn color="blue darken-1" text @click="save"> Save </v-btn>
-            </v-card-actions>
-          </v-card>
+          </form>
         </v-dialog>
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
@@ -179,6 +181,7 @@ export default {
       categoryId: 0,
       short_intro: '',
       description: '',
+      image: ''
     },
     defaultItem: {
       title: '',
@@ -187,6 +190,7 @@ export default {
       categoryId: 0,
       short_intro: '',
       description: '',
+      image: ''
     },
   }),
 
@@ -214,6 +218,15 @@ export default {
       const { data } = await this.$axios.$get('https://marvelous-olympic-18045.herokuapp.com/admin/products')
 
       this.products = data.data
+    },
+
+    changeCover(e) {
+      const files = e;
+      if (files.length === 0) return;
+      const imageURL = window.URL.createObjectURL(files);
+      this.editedItem.image = imageURL;
+      console.log('type', typeof imageURL)
+      console.log('image', this.editedItem.image)
     },
 
     editItem(item) {
@@ -251,16 +264,17 @@ export default {
       })
     },
 
-    async save() {
+    async save(e) {
       if (this.editedIndex > -1) {
         const data = await this.$axios.$put(`https://marvelous-olympic-18045.herokuapp.com/admin/product/${this.editedItem.id}`, this.editedItem)
         console.log(data)
 
         Object.assign(this.products[this.editedIndex], this.editedItem)
       } else {
-        this.products.push(this.editedItem)
+        const form = e.target;
+        const formData = new FormData(form);
 
-        const data = await this.$axios.$post(`https://marvelous-olympic-18045.herokuapp.com/admin/product`, this.editedItem)
+        const data = await this.$axios.$post(`https://marvelous-olympic-18045.herokuapp.com/admin/product`, formData)
         console.log(data)
       }
       this.close()

@@ -149,12 +149,12 @@
       </div>
     </template>
     <template v-slot:[`item.short_intro`]="{ item }">
-      <div class="overflow-x-hidden" style="width: 200px; height: 50px">
+      <div class="overflow-x-hidden" style="width: 200px; max-height: 50px">
         {{ item.short_intro }}
       </div>
     </template>
     <template v-slot:[`item.description`]="{ item }">
-      <div class="overflow-x-hidden" style="width: 300px; height: 50px">
+      <div class="overflow-x-hidden" style="width: 300px; max-height: 50px">
         {{ item.description }}
       </div>
     </template>

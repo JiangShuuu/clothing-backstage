@@ -8,6 +8,7 @@
   >
     <template v-slot:top>
       <v-toolbar flat>
+
         <v-toolbar-title>商品列</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-text-field
@@ -77,7 +78,6 @@
                   ></v-text-field>
                   <v-textarea
                     v-model="editedItem.description"
-                    outlined
                     name="description"
                     label="描述"
                   ></v-textarea>
@@ -101,6 +101,7 @@
             </v-card>
           </form>
         </v-dialog>
+
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
             <v-card-title class="text-h5"
@@ -128,14 +129,21 @@
         :src="item.image"
       ></v-img>
     </template>
+    <template v-slot:[`item.short_intro`]="{ item }">
+      <div class="overflow-x-hidden" style="width: 200px; height: 50px">
+        {{ item.short_intro }}
+      </div>
+    </template>
     <template v-slot:[`item.description`]="{ item }">
-      <div class="overflow-x-hidden" style="width: 50px">
+      <div class="overflow-x-hidden" style="width: 300px; height: 50px">
         {{ item.description }}
       </div>
     </template>
     <template v-slot:[`item.actions`]="{ item }">
-      <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
-      <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+      <div style="width: 50px">
+        <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
+        <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+      </div>
     </template>
     <template v-slot:no-data>
       <v-btn color="primary" @click="initialize"> Reset </v-btn>

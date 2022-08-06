@@ -238,14 +238,15 @@ export default {
 
   created() {
     this.initialize()
-    this.getCategories()
+    // this.getCategories()
   },
 
   methods: {
     async initialize() {
       const { data } = await this.$rpos.product.getProducts()
-      this.products = data.data
-      console.log(this.products)
+      this.products = data.products
+      this.categories = data.categories
+      console.log(data)
     },
 
     async getCategories() {

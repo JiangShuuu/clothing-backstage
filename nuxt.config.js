@@ -59,7 +59,7 @@ export default {
   },
 
   proxy: {
-    '/api/': { target: 'https://marvelous-olympic-18045.herokuapp.com', pathRewrite: { '^/api/': '/' } }
+    '/api/': { target: 'https://express.jiangshuuu.com', pathRewrite: { '^/api/': '/' } }
   },
 
   auth: {
